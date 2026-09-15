@@ -413,6 +413,7 @@ BillsPCRelease:
 
 .asm_216cb
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetBoxMonDisplayName
 	ld e, $27
 	callfar PlayPikachuSoundClip

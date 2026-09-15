@@ -664,6 +664,7 @@ ItemUseBall:
 .printTransferredToPCText
 	push hl
 	xor a
+	ld c, a
 	farcall GetBoxMonDisplayName
 	pop hl
 	call PrintText
@@ -896,6 +897,7 @@ ItemUseEvoStone:
 	ld e, $1b
 	callfar PlayPikachuSoundClip
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	ld hl, RefusingText
 	call PrintText
@@ -1475,6 +1477,7 @@ ItemUseMedicine:
 	call GetMonHeader
 	push de
 	ld a, d
+	ld c, a
 	farcall GetPartyMonDisplayName
 	pop de
 	pop hl
@@ -2555,6 +2558,7 @@ ItemUseTMHM:
 	predef CanLearnTM ; check if the pokemon can learn the move
 	push bc
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	pop bc
 	ld a, c

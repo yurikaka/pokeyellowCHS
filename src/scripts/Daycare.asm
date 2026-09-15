@@ -43,6 +43,7 @@ DayCareMText1:
 	xor a
 	ld [wPartyAndBillsPCSavedMenuItem], a
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	ld hl, DayCareWillLookAfterMonText
 	call PrintText
@@ -230,6 +231,7 @@ DayCareMText1:
 	callfar PlayPikachuSoundClip
 .asm_56430
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	ld hl, DayCareGotMonBackText
 	jr .done

@@ -61,6 +61,7 @@ Printer_GetMonStats:
 	ld [wPokeBallAnimData], a
 	ld [wd0b5], a
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	hlcoord 8, 2
 	call PlaceString

@@ -92,6 +92,7 @@ LeaguePCShowMon:
 	ld d, h
 	ld e, l
 	ld a, [wHoFMonSpecies]
+	ld c, a
 	farcall GetMonDisplayName
 	ld b, SET_PAL_POKEMON_WHOLE_SCREEN
 	ld c, 0

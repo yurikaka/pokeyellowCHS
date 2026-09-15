@@ -1,7 +1,7 @@
 ; Convert a stored Pokemon nickname to the name that should be displayed.
 ;
 ; Input:
-;   a  = species
+;   c  = species
 ;   de = direct pointer to the Pokemon's raw nickname
 ; Output:
 ;   de = wcd6d
@@ -13,6 +13,7 @@
 ; every other nickname is displayed unchanged.
 GetMonDisplayName::
 	push bc
+	ld a, c
 	ld b, a
 	ld a, [wd11e]
 	push af
@@ -23,6 +24,7 @@ GetMonDisplayName::
 	cp 2
 	jr nz, .copyRawNickname
 
+	; In mode 2, compare the stored nickname against the canonical English name.
 	call GetMonEnglishName
 	pop hl
 	push hl
@@ -63,7 +65,6 @@ GetMonDisplayName::
 GetPartyMonDisplayName::
 	push hl
 	push bc
-	ld c, a
 	ld b, 0
 	ld hl, wPartySpecies
 	add hl, bc
@@ -75,6 +76,7 @@ GetPartyMonDisplayName::
 	ld d, h
 	ld e, l
 	pop af
+	ld c, a
 	call GetMonDisplayName
 	pop bc
 	pop hl
@@ -83,7 +85,6 @@ GetPartyMonDisplayName::
 GetEnemyMonDisplayName::
 	push hl
 	push bc
-	ld c, a
 	ld b, 0
 	ld hl, wEnemyPartySpecies
 	add hl, bc
@@ -95,6 +96,7 @@ GetEnemyMonDisplayName::
 	ld d, h
 	ld e, l
 	pop af
+	ld c, a
 	call GetMonDisplayName
 	pop bc
 	pop hl
@@ -103,7 +105,6 @@ GetEnemyMonDisplayName::
 GetBoxMonDisplayName::
 	push hl
 	push bc
-	ld c, a
 	ld b, 0
 	ld hl, wBoxSpecies
 	add hl, bc
@@ -115,6 +116,7 @@ GetBoxMonDisplayName::
 	ld d, h
 	ld e, l
 	pop af
+	ld c, a
 	call GetMonDisplayName
 	pop bc
 	pop hl
@@ -122,12 +124,12 @@ GetBoxMonDisplayName::
 
 GetDayCareMonDisplayName::
 	ld a, [wDayCareMonSpecies]
+	ld c, a
 	ld de, wDayCareMonName
 	jp GetMonDisplayName
 
 GetListMonDisplayName::
-; Input: a = slot in the party/box list selected by wListPointer.
-	ld c, a
+; Input: c = slot in the party/box list selected by wListPointer.
 	ld hl, wPartyCount
 	ld a, [wListPointer]
 	cp l

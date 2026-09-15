@@ -989,6 +989,7 @@ PrintPCBox_PlaceBoxMonInfo:
 	call StoreNamesInBuf
 	
 	ld a, [wBoxNumString]
+	ld c, a
 	farcall GetBoxMonDisplayName
 	pop hl
 	ld bc, 7 + SCREEN_WIDTH;ld bc, SCREEN_WIDTH + 1

@@ -191,14 +191,17 @@ StatusScreen:
 	jr .gotDisplayName
 .partyName
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	jr .gotDisplayName
 .enemyName
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetEnemyMonDisplayName
 	jr .gotDisplayName
 .boxName
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetBoxMonDisplayName
 .gotDisplayName
 	hlcoord 9, 1

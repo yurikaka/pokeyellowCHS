@@ -147,6 +147,7 @@ DisplayListMenuIDLoop::
 	jr .storeChosenEntry
 .pokemonList
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetListMonDisplayName
 .storeChosenEntry ; store the menu entry that the player chose and return
 	ld de, wcd6d
@@ -380,6 +381,7 @@ PrintListMenuEntries::
 	ld b, a
 	ld a, [wListScrollOffset]
 	add b
+	ld c, a
 	farcall GetListMonDisplayName
 	pop hl
 	jr .placeNameString
