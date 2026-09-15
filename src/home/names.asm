@@ -1,5 +1,23 @@
 GetMonName::
+	ld a, [wENGNameMark]
+	cp 1
+	jr z, GetMonEnglishName
+
+GetMonChineseName::
+	xor a
+	jr GetMonNameInLanguage
+
+GetMonEnglishName::
+	ld a, 1
+
+GetMonNameInLanguage:
+; a = 0 for the Chinese table, nonzero for the English table
 	push hl
+	and a
+	ld hl, MonsterNames
+	jr z, .gotNameTable
+	ld hl, MonsterNames2
+.gotNameTable
 	ldh a, [hLoadedROMBank]
 	push af
 	ld a, BANK(MonsterNames)
@@ -7,14 +25,6 @@ GetMonName::
 	ld [MBC1RomBank], a
 	ld a, [wd11e]
 	dec a
-	push af
-	ld a,[wENGNameMark]
-	cp 1
-	ld hl, MonsterNames
-	jr nz, .CHS
-	ld hl, MonsterNames2
-.CHS
-	pop af
 	ld c, 10
 	ld b, 0
 	call AddNTimes
@@ -30,6 +40,15 @@ GetMonName::
 	ld [MBC1RomBank], a
 	pop hl
 	ret
+
+GetMonStoredDefaultName::
+; Input: a = species.
+; Mode 0 stores Chinese; modes 1 and 2 store English.
+	ld [wd11e], a
+	ld a, [wENGNameMark]
+	and a
+	jr z, GetMonChineseName
+	jr GetMonEnglishName
 
 GetItemName::
 ; given an item ID at [wd11e], store the name of the item into a string

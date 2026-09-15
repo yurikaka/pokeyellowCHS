@@ -146,15 +146,8 @@ DisplayListMenuIDLoop::
 	call GetName
 	jr .storeChosenEntry
 .pokemonList
-	ld hl, wPartyCount
-	ld a, [wListPointer]
-	cp l ; is it a list of party pokemon or box pokemon?
-	ld hl, wPartyMonNicks
-	jr z, .getPokemonName
-	ld hl, wBoxMonNicks ; box pokemon names
-.getPokemonName
 	ld a, [wWhichPokemon]
-	call GetPartyMonName
+	farcall GetListMonDisplayName
 .storeChosenEntry ; store the menu entry that the player chose and return
 	ld de, wcd6d
 	call CopyToStringBuffer
@@ -380,13 +373,6 @@ PrintListMenuEntries::
 	jr .placeNameString
 .pokemonPCMenu
 	push hl
-	ld hl, wPartyCount
-	ld a, [wListPointer]
-	cp l ; is it a list of party pokemon or box pokemon?
-	ld hl, wPartyMonNicks
-	jr z, .getPokemonName
-	ld hl, wBoxMonNicks ; box pokemon names
-.getPokemonName
 	ld a, [wWhichPokemon]
 	ld b, a
 	ld a, 4
@@ -394,7 +380,7 @@ PrintListMenuEntries::
 	ld b, a
 	ld a, [wListScrollOffset]
 	add b
-	call GetPartyMonName
+	farcall GetListMonDisplayName
 	pop hl
 	jr .placeNameString
 .movesMenu

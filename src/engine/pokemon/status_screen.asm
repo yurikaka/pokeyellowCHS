@@ -180,10 +180,27 @@ StatusScreen:
 	call PrintNumber ; Pokémon no.
 	hlcoord 14, 10 ;hlcoord 11, 10
 	predef PrintMonType
-	ld hl, NamePointers2
-	call .GetStringPointer
-	ld d, h
-	ld e, l
+	ld a, [wMonDataLocation]
+	and a
+	jr z, .partyName
+	dec a
+	jr z, .enemyName
+	dec a
+	jr z, .boxName
+	farcall GetDayCareMonDisplayName
+	jr .gotDisplayName
+.partyName
+	ld a, [wWhichPokemon]
+	farcall GetPartyMonDisplayName
+	jr .gotDisplayName
+.enemyName
+	ld a, [wWhichPokemon]
+	farcall GetEnemyMonDisplayName
+	jr .gotDisplayName
+.boxName
+	ld a, [wWhichPokemon]
+	farcall GetBoxMonDisplayName
+.gotDisplayName
 	hlcoord 9, 1
 	call PlaceString ; Pokémon name
 	ld hl, OTPointers
@@ -258,13 +275,7 @@ OTPointers:
 	dw wBoxMonOT
 	dw wDayCareMonOT
 
-NamePointers2:
-	dw wPartyMonNicks
-	dw wEnemyMonNicks
-	dw wBoxMonNicks
-	dw wDayCareMonName
-
-	PrintStatusCondition_StatusScreen::
+PrintStatusCondition_StatusScreen::
 	push de
 	dec de
 	dec de ; de = address of current HP

@@ -60,8 +60,8 @@ Printer_GetMonStats:
 	ld a, [wMonHeader]
 	ld [wPokeBallAnimData], a
 	ld [wd0b5], a
-	ld hl, wPartyMonNicks
-	call .GetNamePointer
+	ld a, [wWhichPokemon]
+	farcall GetPartyMonDisplayName
 	hlcoord 8, 2
 	call PlaceString
 

@@ -33,6 +33,8 @@ _GivePokemon::
 .next
 	ld [hli], a
 	ld [hl], "@"
+	xor a
+	farcall GetBoxMonDisplayName
 	ld hl, SentToBoxText
 	call PrintText
 	scf

@@ -144,8 +144,7 @@ GainExperience:
 .next2
 	push hl
 	ld a, [wWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	ld hl, GainedText
 	call PrintText
 	xor a ; PLAYER_PARTY_DATA

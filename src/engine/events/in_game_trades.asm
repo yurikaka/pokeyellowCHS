@@ -1,12 +1,12 @@
 DoInGameTradeDialogue:
 ; trigger the trade offer/action specified by wWhichTrade
 	call SaveScreenTilesToBuffer2
-	ld a,[wENGNameMark]
+	ld a, [wENGNameMark]
 	ld hl, TradeMons
-	cp 1
-	jr nz, .CHS
+	and a
+	jr z, .selectedNameTable
 	ld hl, TradeMons2
-.CHS
+.selectedNameTable
 	ld a, [wWhichTrade]
 	ld bc, $e
 	call AddNTimes

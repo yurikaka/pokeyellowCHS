@@ -107,7 +107,7 @@ _SentToBoxText::
 	text "There's no more"
 	line "room for #MON!"
 	cont "@"
-	text_ram wBoxMonNicks
+	text_ram wcd6d
 	text " was"
 	cont "sent to #MON"
 	cont "BOX @"
