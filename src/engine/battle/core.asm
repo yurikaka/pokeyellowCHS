@@ -1736,6 +1736,7 @@ LoadBattleMonFromParty:
 	ld [wd0b5], a
 	call GetMonHeader
 	ld a, [wPlayerMonNumber]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	ld hl, wcd6d
 	ld de, wBattleMonNick
@@ -1786,6 +1787,7 @@ LoadEnemyMonFromParty:
 	ld [wd0b5], a
 	call GetMonHeader
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetEnemyMonDisplayName
 	ld hl, wcd6d
 	ld de, wEnemyMonNick

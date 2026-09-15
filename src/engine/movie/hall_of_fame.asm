@@ -151,6 +151,7 @@ HoFShowMonOrPlayer:
 
 HoFDisplayAndRecordMonInfo:
 	ld a, [wHoFPartyMonIndex]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	call HoFDisplayMonInfo
 	ld a, [wHoFPartyMonIndex]

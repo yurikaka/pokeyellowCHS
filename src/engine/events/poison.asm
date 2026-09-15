@@ -53,6 +53,7 @@ ApplyOutOfBattlePoisonDamage:
 	ld [wd11e], a
 	push de
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	xor a
 	ld [wJoyIgnore], a

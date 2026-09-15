@@ -30,6 +30,7 @@ UsedCut:
 	ld a, 1
 	ld [wActionResultOrTookBattleTurn], a ; used cut
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	ld hl, wd730
 	set 6, [hl]

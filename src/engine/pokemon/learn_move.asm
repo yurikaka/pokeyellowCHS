@@ -1,6 +1,7 @@
 LearnMove:
 	call SaveScreenTilesToBuffer1
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	ld hl, wcd6d
 	ld de, wLearnMoveMonName

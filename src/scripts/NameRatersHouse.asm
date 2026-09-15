@@ -62,6 +62,7 @@ NameRaterText1:
 	pop af
 	jr c, .asm_1daae
 	ld a, [wWhichPokemon]
+	ld c, a
 	farcall GetPartyMonDisplayName
 	call NameRaterScript_1da20
 	ld hl, NameRaterText_1dad1
