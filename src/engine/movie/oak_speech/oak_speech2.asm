@@ -1,5 +1,7 @@
 ChoosePlayerName:
 	call OakSpeechSlidePicRight
+	xor a ; NAME_PLAYER_SCREEN
+	ld [wNamingScreenType], a
 	ld de, DefaultNamesPlayer
 	call DisplayIntroNameTextBox
 	ld a, [wCurrentMenuItem]
@@ -12,8 +14,6 @@ ChoosePlayerName:
 	jr .done
 .customName
 	ld hl, wPlayerName
-	xor a ; NAME_PLAYER_SCREEN
-	ld [wNamingScreenType], a
 	call DisplayNamingScreen
 	ld a, [wStringBuffer]
 	cp "@"
@@ -33,6 +33,8 @@ YourNameIsText:
 
 ChooseRivalName:
 	call OakSpeechSlidePicRight
+	ld a, NAME_RIVAL_SCREEN
+	ld [wNamingScreenType], a
 	ld de, DefaultNamesRival
 	call DisplayIntroNameTextBox
 	ld a, [wCurrentMenuItem]
@@ -45,8 +47,6 @@ ChooseRivalName:
 	jr .done
 .customName
 	ld hl, wRivalName
-	ld a, NAME_RIVAL_SCREEN
-	ld [wNamingScreenType], a
 	call DisplayNamingScreen
 	ld a, [wStringBuffer]
 	cp "@"
@@ -169,8 +169,17 @@ DisplayIntroNameTextBox:
 	ld de, .namestring
 	call PlaceString
 	pop de
+	ld a, [wENGNameMark]
+	cp 2
+	jr z, .mode2PresetList
 	hlcoord 2, 2
 	call PlaceString
+	jr .presetListDone
+.mode2PresetList
+	ld a, [wNamingScreenType]
+	ld e, a
+	farcall DisplayMode2PlayerRivalPreset
+.presetListDone
 	call UpdateSprites
 	xor a
 	ld [wCurrentMenuItem], a
@@ -193,6 +202,16 @@ GetDefaultName:
 ; a = name index
 ; hl = name list
 	ld b, a
+	cp 3 ; the third preset after "自己决定"
+	jr nz, .normalPreset
+	ld a, [wENGNameMark]
+	cp 2
+	jr nz, .normalPreset
+	ld a, [wNamingScreenType]
+	ld e, a
+	farcall GetMode2PlayerRivalName
+	ret
+.normalPreset
 	ld c, 0
 .loop
 	ld d, h
