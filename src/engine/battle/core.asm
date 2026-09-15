@@ -1735,9 +1735,9 @@ LoadBattleMonFromParty:
 	ld a, [wBattleMonSpecies2]
 	ld [wd0b5], a
 	call GetMonHeader
-	ld hl, wPartyMonNicks
 	ld a, [wPlayerMonNumber]
-	call SkipFixedLengthTextEntries
+	farcall GetPartyMonDisplayName
+	ld hl, wcd6d
 	ld de, wBattleMonNick
 	ld bc, NAME_LENGTH
 	call CopyData
@@ -1785,9 +1785,9 @@ LoadEnemyMonFromParty:
 	ld a, [wEnemyMonSpecies]
 	ld [wd0b5], a
 	call GetMonHeader
-	ld hl, wEnemyMonNicks
 	ld a, [wWhichPokemon]
-	call SkipFixedLengthTextEntries
+	farcall GetEnemyMonDisplayName
+	ld hl, wcd6d
 	ld de, wEnemyMonNick
 	ld bc, NAME_LENGTH
 	call CopyData

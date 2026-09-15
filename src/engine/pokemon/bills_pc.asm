@@ -359,9 +359,6 @@ BillsPCWithdraw:
 	jp c, BillsPCMenu
 	call DisplayDepositWithdrawMenu
 	jp nc, BillsPCMenu
-	ld a, [wWhichPokemon]
-	ld hl, wBoxMonNicks
-	call GetPartyMonName
 	callfar IsThisPartymonStarterPikachu_Box
 	jr nc, .asm_21660
 	ld e, $22
@@ -416,8 +413,7 @@ BillsPCRelease:
 
 .asm_216cb
 	ld a, [wWhichPokemon]
-	ld hl, wBoxMonNicks
-	call GetPartyMonName
+	farcall GetBoxMonDisplayName
 	ld e, $27
 	callfar PlayPikachuSoundClip
 	ld hl, PikachuUnhappyText

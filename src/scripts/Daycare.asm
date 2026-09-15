@@ -43,8 +43,7 @@ DayCareMText1:
 	xor a
 	ld [wPartyAndBillsPCSavedMenuItem], a
 	ld a, [wWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	ld hl, DayCareWillLookAfterMonText
 	call PrintText
 	ld a, 1
@@ -71,9 +70,6 @@ DayCareMText1:
 	jp .done
 
 .daycareInUse
-	xor a
-	ld hl, wDayCareMonName
-	call GetPartyMonName
 	ld a, DAYCARE_DATA
 	ld [wMonDataLocation], a
 	call LoadMonData
@@ -111,6 +107,9 @@ DayCareMText1:
 	ld hl, DayCareMonHasGrownText
 
 .next
+	push hl
+	farcall GetDayCareMonDisplayName
+	pop hl
 	call PrintText
 	ld a, [wPartyCount]
 	cp PARTY_LENGTH
@@ -230,6 +229,8 @@ DayCareMText1:
 	ldpikacry e, PikachuCry35
 	callfar PlayPikachuSoundClip
 .asm_56430
+	ld a, [wWhichPokemon]
+	farcall GetPartyMonDisplayName
 	ld hl, DayCareGotMonBackText
 	jr .done
 

@@ -116,8 +116,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld a, [hl]
 	ld [wEvoNewSpecies], a
 	ld a, [wWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	call CopyToStringBuffer
 	ld hl, IsEvolvingText
 	call PrintText
@@ -156,7 +155,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld c, 40
 	call DelayFrames
 	call ClearScreen
-	call RenameEvolvedMon
+	farcall RenameEvolvedMon
 	ld a, [wd11e]
 	push af
 	ld a, [wd0b5]
@@ -260,36 +259,6 @@ Evolution_PartyMonLoop: ; loop over party mons
 	and a
 	call nz, PlayDefaultMusic
 	ret
-
-RenameEvolvedMon:
-; Renames the mon to its new, evolved form's standard name unless it had a
-; nickname, in which case the nickname is kept.
-	ld a, [wd0b5]
-	push af
-	ld a, [wMonHIndex]
-	ld [wd0b5], a
-	call GetName
-	pop af
-	ld [wd0b5], a
-	ld hl, wcd6d
-	ld de, wStringBuffer
-.compareNamesLoop
-	ld a, [de]
-	inc de
-	cp [hl]
-	inc hl
-	ret nz
-	cp "@"
-	jr nz, .compareNamesLoop
-	ld a, [wWhichPokemon]
-	ld bc, NAME_LENGTH
-	ld hl, wPartyMonNicks
-	call AddNTimes
-	push hl
-	call GetName
-	ld hl, wcd6d
-	pop de
-	jp CopyData
 
 CancelledEvolution:
 	ld hl, StoppedEvolvingText

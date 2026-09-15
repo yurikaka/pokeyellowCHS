@@ -341,26 +341,44 @@ OptionsMenu_Dummy:
 PMNamesPointerTable:
 	dw ChsText
 	dw EngText
+	dw MixedText
 	
 
 EngText:
 	db "English@"
 ChsText:
 	db "Chinese@"
+MixedText:
+	db $09, $ae, $09, $1c, "@" ; 混合
 
 
 OptionsMenu_PMNames:
 	ldh a, [hJoy5]
 	and D_LEFT | D_RIGHT
-	jr nz, .CHANGED
+	jr nz, .changed
 	ld a, [wENGNameMark]
-	and $1
-	jr .NOTCHANGED
-.CHANGED
+	cp 3
+	jr c, .notChanged
+	xor a
+	jr .store
+.changed
+	bit BIT_D_LEFT, a
 	ld a, [wENGNameMark]
-	xor $1
+	jr z, .pressedRight
+	and a
+	jr nz, .decrement
+	ld a, 3
+.decrement
+	dec a
+	jr .store
+.pressedRight
+	inc a
+	cp 3
+	jr c, .store
+	xor a
+.store
 	ld [wENGNameMark], a
-.NOTCHANGED
+.notChanged
 	ld hl, PMNamesPointerTable
 	sla a
 	ld b, 0

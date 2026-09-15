@@ -43,6 +43,8 @@ AskName:
 	cp "@"
 	ret nz
 .declinedNickname
+	ld a, [wcf91]
+	call GetMonStoredDefaultName
 	ld d, h
 	ld e, l
 	ld hl, wcd6d

@@ -53,8 +53,7 @@ ApplyOutOfBattlePoisonDamage:
 	ld [wd11e], a
 	push de
 	ld a, [wWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
+	farcall GetPartyMonDisplayName
 	xor a
 	ld [wJoyIgnore], a
 	call EnableAutoTextBoxDrawing

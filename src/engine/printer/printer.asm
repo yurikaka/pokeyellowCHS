@@ -988,12 +988,8 @@ PrintPCBox_PlaceBoxMonInfo:
 	call SubtractHLbyBC
 	call StoreNamesInBuf
 	
-	ld hl, wBoxMonNicks
-	ld bc, NAME_LENGTH
 	ld a, [wBoxNumString]
-	call AddNTimes
-	ld e, l
-	ld d, h
+	farcall GetBoxMonDisplayName
 	pop hl
 	ld bc, 7 + SCREEN_WIDTH;ld bc, SCREEN_WIDTH + 1
 	add hl, bc

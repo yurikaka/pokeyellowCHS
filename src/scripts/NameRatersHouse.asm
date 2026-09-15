@@ -61,7 +61,8 @@ NameRaterText1:
 	call LoadGBPal
 	pop af
 	jr c, .asm_1daae
-	call GetPartyMonName2
+	ld a, [wWhichPokemon]
+	farcall GetPartyMonDisplayName
 	call NameRaterScript_1da20
 	ld hl, NameRaterText_1dad1
 	jr c, .asm_1daa8
