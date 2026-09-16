@@ -1,12 +1,13 @@
 #!/bin/bash
+set -e
 filepath=$(cd "$(dirname "$0")"; pwd)
 cd "$filepath"
 # mkdir tmp
 
 echo Creating build directory...
 # rm -r buildYUS
-mkdir buildYUS
-cp -r src/* buildYUS
+mkdir -p buildYUS
+cp -r src/. buildYUS
 cd buildYUS
 
 # cd /Users/tom/Library/CloudStorage/OneDrive-Personal/Office/pokeyellowCHS
@@ -24,7 +25,7 @@ cd buildYUS
 # cd $filepath
 
 # python3 tools/_backup.py xlsx/xlsxList.txt xlsx/ 0
-clear
+if [ -t 1 ]; then clear; fi
 
 # echo Which rgbds? Enter number and hit return.
 # echo 1. Original RGBDS installed with the system
@@ -68,4 +69,3 @@ chmod +x _build.command
 # python3 tools/_backup.py xlsx/xlsxList.txt xlsx/ 1
 echo done!
 # fi
-

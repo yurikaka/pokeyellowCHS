@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 filepath=$(cd "$(dirname "$0")"; pwd)
 cd "$filepath"
 option=$1
@@ -10,8 +11,7 @@ echo 使用中文字符
 make --always-make RGBDS=rgbds-cn/ CHAR_FLAGS="-D RGBDS_WCHAR"
 fi
 
-mkdir roms
-mkdir roms/yellowUS
+mkdir -p roms/yellowUS
 
 cp pokeyellow.gbc roms/yellowUS/pokeyellow."$option".gbc
 cp pokeyellow_vc.gbc roms/yellowUS/pokeyellow_vc."$option".gbc
