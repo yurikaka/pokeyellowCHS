@@ -28,6 +28,7 @@ GetMonDisplayName::
 	call GetMonEnglishName
 	pop hl
 	push hl
+	ld b, NAME_LENGTH
 .compareDefaultName
 	ld a, [de]
 	cp [hl]
@@ -36,7 +37,9 @@ GetMonDisplayName::
 	jr z, .defaultNickname
 	inc de
 	inc hl
-	jr .compareDefaultName
+	dec b
+	jr nz, .compareDefaultName
+	jr .customNickname
 
 .defaultNickname
 	pop hl
@@ -146,6 +149,7 @@ RenameEvolvedMon::
 	ld hl, wPartyMonNicks
 	call SkipFixedLengthTextEntries
 	ld de, wcd6d
+	ld b, NAME_LENGTH
 .compareNamesLoop
 	ld a, [de]
 	cp [hl]
@@ -154,7 +158,9 @@ RenameEvolvedMon::
 	jr z, .useNewDefaultName
 	inc hl
 	inc de
-	jr .compareNamesLoop
+	dec b
+	jr nz, .compareNamesLoop
+	ret
 .useNewDefaultName
 	ld a, [wWhichPokemon]
 	ld bc, NAME_LENGTH
